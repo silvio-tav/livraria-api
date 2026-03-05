@@ -1,5 +1,6 @@
 package com.example.biblioteca.controller;
 
+import com.example.biblioteca.application.dto.LivroFiltroDTO;
 import com.example.biblioteca.application.dto.LivroRequestDto;
 import com.example.biblioteca.application.dto.LivroResponseDto;
 import com.example.biblioteca.application.mapper.LivroDtoMapper;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,13 +35,11 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroResponseDto>> ListarLivros(){
-        List<LivroEnitty> livroEnitties = listarLivrosUseCase.listarLivros();
-        List<LivroResponseDto> livroResponseDtoList = new ArrayList<>();
-        for (int i = 0; i < livroEnitties.size(); i++) {
-            livroResponseDtoList.add(livroDtoMapper.entityToResponse(livroEnitties.get(i)));
-        }
-        return ResponseEntity.ok(livroResponseDtoList);
+    public ResponseEntity<List<LivroResponseDto>> listarLivrosFlitros(
+            @ModelAttribute LivroFiltroDTO filtroDTO
+            ){
+        List<LivroEnitty> livroEnitties = listarLivrosUseCase.listarLivrosComFiltros(filtroDTO);
+        return ResponseEntity.ok(livroEnitties.stream().map(livroDtoMapper::entityToResponse).toList());
     }
 
     @PostMapping

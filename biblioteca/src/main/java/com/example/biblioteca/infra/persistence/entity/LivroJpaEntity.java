@@ -1,5 +1,6 @@
 package com.example.biblioteca.infra.persistence.entity;
 
+import com.example.biblioteca.domain.enums.GeneroLivro;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,9 +17,13 @@ public class LivroJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String titulo;
     private String autor;
-    private String genero;
+
+    @Enumerated(EnumType.STRING)
+    private GeneroLivro genero;
+
     private LocalDate dataPublicacao;
     private Double preco;
 }

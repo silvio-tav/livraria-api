@@ -1,5 +1,7 @@
 package com.example.biblioteca.application.usecase;
 
+import com.example.biblioteca.application.dto.LivroFiltroDTO;
+import com.example.biblioteca.application.mapper.LivroDtoMapper;
 import com.example.biblioteca.domain.entity.LivroEnitty;
 import com.example.biblioteca.infra.persistence.entity.LivroJpaEntity;
 import com.example.biblioteca.infra.persistence.mapper.LivroEntityMapper;
@@ -19,12 +21,14 @@ public class ListarLivrosUseCase {
         this.livroEntityMapper = livroEntityMapper;
     }
 
-    public List<LivroEnitty> listarLivros(){
-        List<LivroJpaEntity> all = repository.findAll();
-        List<LivroEnitty> livroEnitties = new ArrayList<>();
-        for (int i = 0; i < all.size(); i++) {
-            livroEnitties.add(livroEntityMapper.toEntity(all.get(i)));
-        }
-        return livroEnitties;
+    public List<LivroEnitty> listarLivrosComFiltros(LivroFiltroDTO filtroDTO){
+        List<LivroJpaEntity> livroJpaEntities = repository.listarComFiltros(
+                filtroDTO.getTitulo(),
+                filtroDTO.getAutor(),
+                filtroDTO.getGenero(),
+                filtroDTO.getPrecoMin(),
+                filtroDTO.getPrecoMax()
+        );
+        return livroJpaEntities.stream().map(livroEntityMapper::toEntity).toList();
     }
 }

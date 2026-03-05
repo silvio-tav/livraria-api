@@ -1,5 +1,6 @@
 package com.example.biblioteca.application.dto;
 
+import com.example.biblioteca.domain.enums.GeneroLivro;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +25,7 @@ public class LivroRequestDto {
     @NotBlank
     @Size(min = 1, max = 30)
     @JsonProperty
-    private String genero;
+    private GeneroLivro genero;
 
     @NotNull
     @JsonProperty
