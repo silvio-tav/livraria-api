@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LivroFiltroDTO {
+public class LivroFiltroDto {
     private String titulo;
     private String autor;
     private GeneroLivro genero;

@@ -17,4 +17,5 @@ public class LivroResponseDto {
     private GeneroLivro genero;
     private LocalDate dataPublicacao;
     private Double preco;
+    private LivrariaResponseDto livraria;
 }

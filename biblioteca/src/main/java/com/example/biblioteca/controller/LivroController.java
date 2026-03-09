@@ -1,9 +1,9 @@
 package com.example.biblioteca.controller;
 
-import com.example.biblioteca.application.dto.LivroFiltroDTO;
+import com.example.biblioteca.application.dto.LivroFiltroDto;
 import com.example.biblioteca.application.dto.LivroRequestDto;
 import com.example.biblioteca.application.dto.LivroResponseDto;
-import com.example.biblioteca.application.mapper.LivroDtoMapper;
+import com.example.biblioteca.application.mapper.LivroMapper;
 import com.example.biblioteca.application.usecase.AtualizarLivroUseCase;
 import com.example.biblioteca.application.usecase.CadastrarLivroUseCase;
 import com.example.biblioteca.application.usecase.DeletarLivroUseCase;
@@ -24,30 +24,30 @@ public class LivroController {
     private final CadastrarLivroUseCase cadastrarLivroUseCase;
     private final AtualizarLivroUseCase atualizarLivroUseCase;
     private final DeletarLivroUseCase deletarLivroUseCase;
-    private final LivroDtoMapper livroDtoMapper;
+    private final LivroMapper livroMapper;
 
-    public LivroController(ListarLivrosUseCase listarLivrosUseCase, CadastrarLivroUseCase cadastrarLivroUseCase, AtualizarLivroUseCase atualizarLivroUseCase, DeletarLivroUseCase deletarLivroUseCase, LivroDtoMapper livroDtoMapper) {
+    public LivroController(ListarLivrosUseCase listarLivrosUseCase, CadastrarLivroUseCase cadastrarLivroUseCase, AtualizarLivroUseCase atualizarLivroUseCase, DeletarLivroUseCase deletarLivroUseCase, LivroMapper livroMapper) {
         this.listarLivrosUseCase = listarLivrosUseCase;
         this.cadastrarLivroUseCase = cadastrarLivroUseCase;
         this.atualizarLivroUseCase = atualizarLivroUseCase;
         this.deletarLivroUseCase = deletarLivroUseCase;
-        this.livroDtoMapper = livroDtoMapper;
+        this.livroMapper = livroMapper;
     }
 
     @GetMapping
     public ResponseEntity<List<LivroResponseDto>> listarLivrosFlitros(
-            @ModelAttribute LivroFiltroDTO filtroDTO
+            @ModelAttribute LivroFiltroDto filtroDTO
             ){
         List<LivroEnitty> livroEnitties = listarLivrosUseCase.listarLivrosComFiltros(filtroDTO);
-        return ResponseEntity.ok(livroEnitties.stream().map(livroDtoMapper::entityToResponse).toList());
+        return ResponseEntity.ok(livroEnitties.stream().map(livroMapper::entityToResponse).toList());
     }
 
     @PostMapping
     public ResponseEntity<LivroResponseDto> cadastrarLivro(
             @RequestBody @Valid LivroRequestDto livroRequestDto
             ){
-        LivroResponseDto livroResponseDto = livroDtoMapper.entityToResponse(
-                        cadastrarLivroUseCase.cadastrarLivro(livroDtoMapper.requestToEntity(livroRequestDto))
+        LivroResponseDto livroResponseDto = livroMapper.entityToResponse(
+                        cadastrarLivroUseCase.cadastrarLivro(livroMapper.requestToEntity(livroRequestDto), livroRequestDto.getLivrariaId())
                 );
         return ResponseEntity.status(HttpStatus.CREATED).body(livroResponseDto);
     }
@@ -58,8 +58,8 @@ public class LivroController {
             @RequestBody @Valid LivroRequestDto livroRequestDto
     ){
         return ResponseEntity.ok(
-                livroDtoMapper.entityToResponse(
-                        atualizarLivroUseCase.atualizarLivro(livroId, livroDtoMapper.requestToEntity(livroRequestDto))
+                livroMapper.entityToResponse(
+                        atualizarLivroUseCase.atualizarLivro(livroId, livroMapper.requestToEntity(livroRequestDto))
                 )
         );
     }

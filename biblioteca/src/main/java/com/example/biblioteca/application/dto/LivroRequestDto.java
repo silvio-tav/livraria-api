@@ -22,8 +22,7 @@ public class LivroRequestDto {
     @JsonProperty
     private String autor;
 
-    @NotBlank
-    @Size(min = 1, max = 30)
+    @NotNull
     @JsonProperty
     private GeneroLivro genero;
 
@@ -35,4 +34,8 @@ public class LivroRequestDto {
     @DecimalMin(value = "0.1", message = "O preço deve ser maior que 0")
     @JsonProperty
     private Double preco;
+
+    @NotNull
+    @JsonProperty
+    private Long LivrariaId;
 }

@@ -18,12 +18,13 @@ public class LivroEntityMapper {
 
     public LivroEnitty toEntity(LivroJpaEntity livroJpaEntity){
         return LivroEnitty.builder()
-                .livroId(livroJpaEntity.getId())
+                .livroId(livroJpaEntity.getLivroId())
                 .autor(livroJpaEntity.getAutor())
                 .dataPublicacao(livroJpaEntity.getDataPublicacao())
                 .genero(livroJpaEntity.getGenero())
                 .preco(livroJpaEntity.getPreco())
                 .titulo(livroJpaEntity.getTitulo())
+                .livraria(livroJpaEntity.getLivraria())
                 .build();
     }
 }

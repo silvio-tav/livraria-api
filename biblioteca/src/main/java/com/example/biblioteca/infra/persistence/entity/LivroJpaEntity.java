@@ -12,11 +12,11 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "livros")
+@Table(name = "livro")
 public class LivroJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long livroId;
 
     private String titulo;
     private String autor;
@@ -26,4 +26,8 @@ public class LivroJpaEntity {
 
     private LocalDate dataPublicacao;
     private Double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "livraria_id")
+    private LivrariaJpaEntity livraria;
 }

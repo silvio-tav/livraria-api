@@ -1,14 +1,12 @@
 package com.example.biblioteca.application.usecase;
 
-import com.example.biblioteca.application.dto.LivroFiltroDTO;
-import com.example.biblioteca.application.mapper.LivroDtoMapper;
+import com.example.biblioteca.application.dto.LivroFiltroDto;
 import com.example.biblioteca.domain.entity.LivroEnitty;
 import com.example.biblioteca.infra.persistence.entity.LivroJpaEntity;
 import com.example.biblioteca.infra.persistence.mapper.LivroEntityMapper;
 import com.example.biblioteca.infra.persistence.repository.LivroRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +19,7 @@ public class ListarLivrosUseCase {
         this.livroEntityMapper = livroEntityMapper;
     }
 
-    public List<LivroEnitty> listarLivrosComFiltros(LivroFiltroDTO filtroDTO){
+    public List<LivroEnitty> listarLivrosComFiltros(LivroFiltroDto filtroDTO){
         List<LivroJpaEntity> livroJpaEntities = repository.listarComFiltros(
                 filtroDTO.getTitulo(),
                 filtroDTO.getAutor(),

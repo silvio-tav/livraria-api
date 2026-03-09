@@ -8,5 +8,6 @@ public enum GeneroLivro {
     SUSPENSE,
     BIOGRAFIA,
     TECNOLOGIA,
-    HISTORIA
+    HISTORIA,
+    LITERATURA
 }
